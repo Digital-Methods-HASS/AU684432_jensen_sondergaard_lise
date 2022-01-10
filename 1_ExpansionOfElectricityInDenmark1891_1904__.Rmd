@@ -1,0 +1,68 @@
+---
+title: "Digital Methods Exam Autum 2021"
+author: "Lise Sondergaard Jensen"
+date: "9/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## __Expansion of Electricity in Denmark 1891 - 1904__
+The topic for my final exam project is expansion of electricity in Denmark 1891 - 1904.
+I want to use R to visualise the expansion of electricity in Denmark in the selected period.
+
+
+## __Leaflet__
+
+I will be using the Leaflet package to create the map of Denmark for 1891 - 1904, showing where the power stations where placed in Denmark.
+
+
+First I will make sure that we have the libraries open and ready for use
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(leaflet)
+```
+
+```{r}
+library(htmlwidgets)
+```
+
+## __Dataset__
+
+Then I want to import my dataset:
+
+```{r}
+library(readr)
+elvaerker_1891_1904_csv <- read_delim("~/OneDrive/Historie/3 Semester E21/Teoriorienteret metode/Digitale Metoder/Eksamen/Data/elvaerker_1891_1904_csv.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE)
+View(elvaerker_1891_1904_csv)
+```
+
+## __Create map__
+
+
+Now I want to create the map, add markers and pop up text.
+
+```{r}
+leaflet(elvaerker_1891_1904_csv) %>% 
+  setView(10.20, 56.12, zoom = 6.4) %>% 
+  addTiles() %>% 
+  addMarkers(lng = elvaerker_1891_1904_csv$Longitude,
+             lat = elvaerker_1891_1904_csv$Latitude,
+             popup = ~paste(NameOfStation, Opened, sep = "<br/>"))
+```
+
+
+## __Conclusion__
+
+
+The map shows the number of power stations in 1904, and the first opened in 1891. It is very visual that in some areas of Denmark, they are working hard to establish the power stations. From Aarhus and north there is only 4 power stations, then 3 stations around Aarhus and 30 power stations in the south and eastern part of the country. The island of Fyn only have one station in the city of Odense and islands around Fyn and Sjælland are also still covered in darkness.
+
+
